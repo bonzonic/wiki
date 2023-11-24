@@ -35,3 +35,17 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+def search(entry_lsts, page_to_be_found):
+    result = [False, []]
+    print(entry_lsts)
+    potential_lst = list(filter(lambda v: re.match(f'.*{page_to_be_found}.*', v.lower()), entry_lsts))
+    correct_lst = list(filter(lambda v: re.match(f'{page_to_be_found}', v.lower()), entry_lsts))
+
+    # correct_lst = list(filter(lambda v: v == page_to_be_found), potential_lst)
+    if len(correct_lst) == 1:
+        result[0] = True
+        result[1] = correct_lst
+    else:
+        result[1] = potential_lst
+    return result
