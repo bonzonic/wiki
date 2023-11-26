@@ -22,7 +22,8 @@ def save_entry(title, content):
     filename = f"entries/{title}.md"
     if default_storage.exists(filename):
         default_storage.delete(filename)
-    default_storage.save(filename, ContentFile(content))
+
+    default_storage.save(filename, ContentFile(content.encode('ascii')))
 
 
 def get_entry(title):
@@ -36,13 +37,14 @@ def get_entry(title):
     except FileNotFoundError:
         return None
 
+
 def search(entry_lsts, page_to_be_found):
     result = [False, []]
-    print(entry_lsts)
-    potential_lst = list(filter(lambda v: re.match(f'.*{page_to_be_found}.*', v.lower()), entry_lsts))
-    correct_lst = list(filter(lambda v: re.match(f'{page_to_be_found}', v.lower()), entry_lsts))
+    potential_lst = list(filter(lambda v: re.match(
+        f'.*{page_to_be_found}.*', v.lower()), entry_lsts))
+    correct_lst = list(filter(lambda v: re.match(
+        f'{page_to_be_found}', v.lower()), entry_lsts))
 
-    # correct_lst = list(filter(lambda v: v == page_to_be_found), potential_lst)
     if len(correct_lst) == 1:
         result[0] = True
         result[1] = correct_lst

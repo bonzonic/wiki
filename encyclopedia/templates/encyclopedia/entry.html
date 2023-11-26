@@ -1,10 +1,6 @@
-{% extends "encyclopedia/layout.html" %}
-
-{% block title %}
-{{entry}}
-{% endblock %}
-
-{% block body %}
-
-{{body | safe}}
+{% extends 'encyclopedia/layout.html' %} {% block title %}
+  {{ entry }}
+{% endblock %} {% block body %}
+  {{ body|safe }}
+    <a href="/add?action=edit&title={{entry}}"><button>Edit Page</button>
 {% endblock %}

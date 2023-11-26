@@ -1,0 +1,28 @@
+{% extends 'encyclopedia/layout.html' %} {% block title %}
+  <h1>
+    {% if action == 'add' %}
+      Add Page
+    {% else %}
+      Edit Page
+    {% endif %}
+  </h1>
+{% endblock %}
+
+{% block body %}
+  <h1>
+    {% if action == 'add' %}
+      Create New page
+    {% else %}
+      Edit Page
+    {% endif %}
+  </h1>
+
+  <form method="POST" action="{% url 'add' %}">
+    {% csrf_token %}
+    <label for="title">Title:</label><br />
+    <input type="text" id="title" name="title" value="{{ title|default:'' }}" readonly /><br />
+    <label for="content">Content:</label><br />
+    <textarea id="content" name="content">{{body|default:''}}</textarea><br />
+    <input name="action" type="submit" value="{% if action == 'add' %}Submit{% else %}Save{% endif %}"/>
+  </form>
+{% endblock %}
